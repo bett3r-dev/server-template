@@ -1,4 +1,4 @@
-import { Library, ModuleFactoryModule } from ".";
+import { Library, ModuleFactoryModule, ServerInitEmitter } from ".";
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -30,9 +30,10 @@ export async function loadModulesFromDirectory(modulesPath: string, options: Loa
   return modulesMap;
 }
 
-export const createModules = async (libraries: Record<string, Library>, modulesPath: string, options?: LoadModuleOptions) => {
+export const createModules = (serverInitEmitter: ServerInitEmitter) => async (libraries: Record<string, Library>, modulesPath: string, options?: LoadModuleOptions) => {
   const modules = await loadModulesFromDirectory(modulesPath, options);
   for (const module of Object.values(modules)) {
-    module.create(libraries);
+    module.create({...libraries, serverInitEmitter});
   }
+  serverInitEmitter.emit('allModulesLoaded');
 }

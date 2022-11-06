@@ -1,9 +1,9 @@
-import { Library, LibraryFactoryModule } from ".";
+import { Library, LibraryFactoryModule, ServerInitEmitter } from ".";
 
-export const createLibraries = (librariesFactories: Record<string, LibraryFactoryModule>): Record<string, Library> => {
+export const createLibraries = (serverInitEmitter: ServerInitEmitter) => (librariesFactories: Record<string, LibraryFactoryModule>): Record<string, Library> => {
   const libraries: Record<string, Library> = {}
   for (const name of Object.keys(librariesFactories)) {
-    libraries[name] = librariesFactories[name].create();
+    libraries[name] = librariesFactories[name].create(serverInitEmitter);
   }
   
   const initedLibraries: Set<string> = new Set();
