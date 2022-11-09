@@ -17,9 +17,14 @@ describe('Libraries Loading', () => {
   });
   it('loads libraries with interdependencies', () => {
     const manager = create();
-    const libraries = manager.createLibraries( { library2, library1} );
+    const library6 = {
+      name: 'string'
+    }
+    const libraries = manager.createLibraries( { library2, library1}, {library6} );
     expect(libraries.library2.helloUpperCase).toBeDefined();
     expect(libraries.library2.helloUpperCase('tomas')).toBe('Hello TOMAS');
+    expect(libraries.library6.name).toBeDefined();
+    expect(libraries.library6.name).toBe('string');
   });
   it('supports EventEmitters as respose of libraries', (done) => {
     const serverInitEmitter = new EventEmitter() as ServerInitEmitter;
@@ -70,10 +75,10 @@ describe('Loads Modules', () => {
           port = (s.address() as {port: number}).port;
           return {};
         }
-      }
+      };
       const libraries = manager.createLibraries( {library2, library3, library4, library5, library1} );
       manager.createModules(libraries, path.join(__dirname,'fixtures/modules'), options as LoadModuleOptions);
-      const fn = jest.fn()
+      const fn = jest.fn();
       serverInitEmitter.on('allModulesLoaded', fn);
       serverInitEmitter.on('serverReady', () => {
         get(`http://localhost:${port}`, (res) => {

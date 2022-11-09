@@ -1,33 +1,8 @@
 import { createLibraries } from "./libraries";
 import { createModules } from "./modules";
-import TypedEmitter from 'typed-emitter';
+import { ServerInitEmitter } from "./types";
 
-export type ServerInitEmitter = TypedEmitter<{
-  moduleInitted: (name: string) => void;
-  allModulesLoaded: () => void;
-  serverReady: () => void;
-}>
-
-
-export type LoadLibraryFunction = <T=any>(name:string) => T;
-
-export type Library<T=any> = {
-  init?: (loadLibrary: LoadLibraryFunction) => {}
-} & T
-
-export type LibraryFactoryModule = {
-  create: (serverInitted?: ServerInitEmitter) => Library
-}
-
-export type LibraryFactory = (serverInitEmitter: ServerInitEmitter) => Library;
-
-export type Libraries = Record<string, Library | ServerInitEmitter>
-
-export type ModuleFactory = (libraries: Libraries) => void;
-
-export type ModuleFactoryModule = {
-  create: ModuleFactory
-}
+export * from './types';
 
 export const create = (serverInitEmitter?: ServerInitEmitter, serverReadyModulesRequired: string[] = []) => {
   if (serverReadyModulesRequired.length){

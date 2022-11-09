@@ -1,4 +1,4 @@
-import { Library, ModuleFactoryModule, ServerInitEmitter } from ".";
+import { Library, ModuleFactoryModule, ServerInitEmitter } from "./types";
 import fs from 'fs/promises';
 import path from 'path';
 
