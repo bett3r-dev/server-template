@@ -7,6 +7,9 @@
     "glob": "^8.0.3",
     "ts-jest": "^29.0.3"
   },
+  "files": [
+    "build"
+  ],
   "devDependencies": {
     "jest": "^29.2.2",
     "ts-node": "^10.9.1",
