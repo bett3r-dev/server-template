@@ -1,12 +1,9 @@
 {
   "name": "@bett3r-dev/server-template",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "license": "MIT",
-  "dependencies": {
-    "glob": "^8.0.3",
-    "ts-jest": "^29.0.3"
-  },
   "files": [
     "build"
   ],
