@@ -20,6 +20,10 @@ export const create = (serverInitEmitter?: ServerInitEmitter, serverReadyModules
         serverInitEmitter.emit('serverReady');
       }
     })
+
+    process.on('exit', () => {
+      clearTimeout(alertTimeout);
+    })
   }
   return {
     createLibraries: createLibraries(serverInitEmitter as ServerInitEmitter),
