@@ -16,11 +16,11 @@ export type LibraryFactoryModule = {
   create: (serverInitted?: ServerInitEmitter) => Library
 }
 
-export type LibraryFactory<T extends Libraries = any, LIBRARY=Record<string, any>> = (serverInitEmitter: ServerInitEmitter) => Library<T, LIBRARY>;
+export type LibraryFactory<T extends Libraries = any, LIBRARY=Record<string, any>> = (serverInitEmitter: ServerInitEmitter, ...args:unknown[]) => Library<T, LIBRARY>;
 
 export type Libraries = Record<string, Library | ServerInitEmitter>
 
-export type ModuleFactory<T extends Libraries = Libraries> = (libraries: T) => void;
+export type ModuleFactory<T extends Libraries = Libraries> = (libraries: T, ...args:unknown[]) => void;
 
 export type ModuleFactoryModule = {
   create: ModuleFactory
