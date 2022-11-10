@@ -5,6 +5,7 @@ import { ServerInitEmitter } from "./types";
 export * from './types';
 
 export const create = (serverInitEmitter?: ServerInitEmitter, serverReadyModulesRequired: string[] = []) => {
+  let serverReady = false;
   if (serverReadyModulesRequired.length){
     const moduleInitted: Set<string> = new Set();
     const alertTimeout = setTimeout(() => {
@@ -13,8 +14,9 @@ export const create = (serverInitEmitter?: ServerInitEmitter, serverReadyModules
     }, 10000); // 10 seconds
     serverInitEmitter?.on('moduleInitted', (name) => {
       moduleInitted.add(name);
-      if (serverReadyModulesRequired.every((name) => moduleInitted.has(name))){
+      if (!serverReady && serverReadyModulesRequired.every((name) => moduleInitted.has(name))){
         clearTimeout(alertTimeout);
+        serverReady = true;
         serverInitEmitter.emit('serverReady');
       }
     })
