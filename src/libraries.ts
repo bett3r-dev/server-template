@@ -18,9 +18,8 @@ export const createLibraries = (serverInitEmitter: ServerInitEmitter) => (librar
     libraries[name].init && (libraries[name].init as Function)(loadLibrary);
     initedLibraries.add(name);
   }
-
   for (const name of Object.keys(libraries)) {
-    initLibrary(name);
+    loadLibrary(name);
   }
   return libraries;
 };
