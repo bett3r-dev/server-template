@@ -32,8 +32,8 @@ export async function loadModulesFromDirectory(modulesPath: string, options: Loa
 
 export const createModules = (serverInitEmitter: ServerInitEmitter) => async (libraries: Record<string, Library>, modulesPath: string, options?: LoadModuleOptions) => {
   const modules = await loadModulesFromDirectory(modulesPath, options);
-  for (const module of Object.values(modules)) {
-    module.create({...libraries, serverInitEmitter});
+  for (const module of Object.keys(modules)) {
+    modules[module].create({...libraries, serverInitEmitter});
   }
   serverInitEmitter.emit('allModulesLoaded');
 }
