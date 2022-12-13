@@ -20,7 +20,7 @@ export type LibraryFactory<T extends Libraries = any, LIBRARY=Record<string, any
 
 export type Libraries = Record<string, Library | ServerInitEmitter>
 
-export type ModuleFactory<T extends Libraries = Libraries> = (libraries: T, ...args:unknown[]) => void;
+export type ModuleFactory<T extends Libraries = Libraries> = <MOD=void>(libraries: T, ...args:unknown[]) => MOD;
 
 export type ModuleFactoryModule = {
   create: ModuleFactory
